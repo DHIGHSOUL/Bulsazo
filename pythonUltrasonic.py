@@ -11,16 +11,18 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(PIN_TRIG, GPIO.OUT)
 GPIO.setup(PIN_ECHO, GPIO.IN)
 
-def postUltrasonic(ultrasonicValuea):
+def postUltrasonic(ultrasonicValue):
     url = "http://203.253.128.177:7579/Mobius/Bulsazo/Ultrasonic/DATA"
 
-    payload = "{\n    \"m2m:cin\": {\n        \"con\": \"%s\"\n    }\n}" % ultrasonicValuea
+    payload = "{\n    \"m2m:cin\": {\n        \"con\": \"%s\"\n    }\n}" % ultrasonicValue
     headers = {
     'Accept': 'application/json',
     'X-M2M-RI': '12345',
     'X-M2M-Origin': 'S6uUvi644hj',
     'Content-Type': 'application/vnd.onem2m-res+json; ty=4'
     }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print("PostUltrasonicResponse: ", response.text)
 
 try:
     while True:

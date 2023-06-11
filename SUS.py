@@ -5,7 +5,7 @@ import requests
 import json
 import time
 
-sendCMDURL = [
+sendCMDURLs = [
     'http://203.253.128.177:7579/Mobius/Bulsazo/Ultrasonic/CMD'
     'http://203.253.128.177:7579/Mobius/Bulsazo/LED/CMD'
     'http://203.253.128.177:7579/Mobius/TempHumi/Temperature/CMD'
@@ -29,21 +29,21 @@ def startThread():
         thread2.join()
 
 def sendCMD():
-    while True:
-        for cnt in sendCMDURL:
-            url = cnt
+    for cnt in sendCMDURLs:
+        url = cnt
 
-            payload = "{\n    \"m2m:cin\": {\n        \"con\": \"1\"\n    }\n}"
-            headers = {
-            'Accept': 'application/json',
-            'X-M2M-RI': '12345',
-            'X-M2M-Origin': 'S6uUvi644hj',
-            'Content-Type': 'application/vnd.onem2m-res+json; ty=4'
-            }
+        payload = "{\n    \"m2m:cin\": {\n        \"con\": \"1\"\n    }\n}"
+        headers = {
+        'Accept': 'application/json',
+        'X-M2M-RI': '12345',
+        'X-M2M-Origin': 'S6uUvi644hj',
+        'Content-Type': 'application/vnd.onem2m-res+json; ty=4'
+        }
 
-            response = requests.request("POST", url, headers=headers, data=payload)
-            print("sendCMDResponse: ", response.text)
-            time.sleep(1)
+        response = requests.request("POST", url, headers=headers, data=payload)
+        print("sendCMDResponse: ", response.text)
+        time.sleep(1)
+    startThread()
 
 def getPIRCMD():
     while True:
